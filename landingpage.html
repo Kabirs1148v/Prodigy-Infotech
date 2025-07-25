@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akshat Singh | Interactive Nav</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1f2f, #15172b);
+      color: #fff;
+      min-height: 200vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(30, 144, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(13, 71, 161, 0.9);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #6a5aff, #00c9ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #6a5aff; }
+      to { text-shadow: 0 0 20px #00c9ff; }
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .menu li a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .menu li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .menu li a.active {
+      background: linear-gradient(45deg, #6a5aff, #00c9ff);
+      color: #fff;
+    }
+
+    section {
+      height: 100vh;
+      padding: 100px 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    #home { background: #0f2027; color: #00d2ff; }
+    #about { background: #203a43; color: #6a5aff; }
+    #services { background: #2c5364; color: #00ffb3; }
+    #contact { background: #0f2027; color: #ff61d2; }
+
+    .bg-particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background particles -->
+  <div class="bg-particles" id="particles"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="brand">Akshat Singh</div>
+    <ul class="menu">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Sections -->
+  <section id="home">Home</section>
+  <section id="about">About</section>
+  <section id="services">Services</section>
+  <section id="contact">Contact</section>
+
+  <script>
+    // Scroll navbar background
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Active link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // Floating particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 60; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      container.appendChild(p);
+    }
+  </script>
+
+</body>
+</html>
